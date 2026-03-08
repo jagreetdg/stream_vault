@@ -42,7 +42,7 @@
 <div class="page-container glass-panel">
   <div class="header-section">
     <h2>Secure & Instant Streaming</h2>
-    <p>Upload a video and share it instantly. Viewers can watch even before the upload finishes processing.</p>
+    <p>Upload a video and share it instantly !</p>
   </div>
 
   <div class="upload-section">

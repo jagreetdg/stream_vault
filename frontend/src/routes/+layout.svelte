@@ -5,7 +5,6 @@
 <main class="app-container">
   <header class="header">
     <div class="logo">
-      <span class="logo-icon">🎥</span>
       <h1>StreamVault</h1>
     </div>
   </header>
