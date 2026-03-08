@@ -15,7 +15,7 @@ const ALLOWED_TYPES = new Set([
 // POST /api/upload/init
 uploadRouter.post('/init', async (req, res, next) => {
   try {
-    const { filename, file_size, content_type } = req.body;
+    const { filename, file_size, content_type, title } = req.body;
 
     if (!filename || !file_size || !content_type)
       return res.status(400).json({ error: 'Missing required fields' });
@@ -29,9 +29,9 @@ uploadRouter.post('/init', async (req, res, next) => {
     const s3Key = `raw/${videoId}/source.${ext}`;
 
     await pool.query(
-      `INSERT INTO videos (id, status, original_name, content_type, file_size, s3_raw_key)
-       VALUES ($1, 'pending', $2, $3, $4, $5)`,
-      [videoId, filename, content_type, file_size, s3Key]
+      `INSERT INTO videos (id, status, original_name, content_type, file_size, s3_raw_key, title)
+       VALUES ($1, 'pending', $2, $3, $4, $5, $6)`,
+      [videoId, filename, content_type, file_size, s3Key, title || null]
     );
 
     const uploadUrl = await presignedPutUrl(s3Key, content_type);

@@ -9,6 +9,7 @@ export interface InitUploadResponse {
 
 export interface VideoStatus {
   video_id: string;
+  title?: string;
   status: 'pending' | 'queued' | 'processing' | 'ready' | 'error';
   hls_url?: string;
   duration_seconds?: number;
@@ -19,12 +20,13 @@ export interface VideoStatus {
 export async function initUpload(
   filename: string,
   fileSize: number,
-  contentType: string
+  contentType: string,
+  title?: string
 ): Promise<InitUploadResponse> {
   const res = await fetch(`${API_BASE}/api/upload/init`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ filename, file_size: fileSize, content_type: contentType }),
+    body: JSON.stringify({ filename, file_size: fileSize, content_type: contentType, title }),
   });
   if (!res.ok) {
     let msg = await res.text();

@@ -10,7 +10,8 @@
     | { phase: 'error'; message: string };
 
   let state: UploadState = { phase: 'idle' };
-  const MAX_SIZE = 10 * 1024 * 1024 * 1024; // Increased to 10GB logically for a nice feeling, even though limits apply on backend
+  let title = '';
+  const MAX_SIZE = 10 * 1024 * 1024 * 1024;
 
   async function handleFile(file: File) {
     if (file.size > MAX_SIZE) {
@@ -22,7 +23,7 @@
 
     try {
       const { video_id, upload_url, watch_url } = await initUpload(
-        file.name, file.size, file.type
+        file.name, file.size, file.type, title || undefined
       );
 
       await uploadToS3(upload_url, file, (pct) => {
@@ -47,6 +48,15 @@
 
   <div class="upload-section">
     {#if state.phase === 'idle'}
+      <div class="title-input-wrapper">
+        <input
+          class="title-input"
+          type="text"
+          bind:value={title}
+          placeholder="Give your video a title (optional)"
+          maxlength="255"
+        />
+      </div>
       <UploadZone on:file={(e) => handleFile(e.detail)} />
 
     {:else if state.phase === 'uploading'}
@@ -122,6 +132,33 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+  }
+
+  .title-input-wrapper {
+    margin-bottom: 1.5rem;
+  }
+
+  .title-input {
+    width: 100%;
+    padding: 0.85rem 1.2rem;
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+    background: rgba(0, 0, 0, 0.4);
+    color: var(--text-primary);
+    font-size: 1.05rem;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    box-sizing: border-box;
+  }
+
+  .title-input::placeholder {
+    color: var(--text-secondary);
+    opacity: 0.6;
+  }
+
+  .title-input:focus {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
   }
 
   /* Uploading State */

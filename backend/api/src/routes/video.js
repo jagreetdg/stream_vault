@@ -20,6 +20,7 @@ videoRouter.get('/:id', async (req, res, next) => {
 
     res.json({
       video_id: video.id,
+      title: video.title ?? null,
       status: video.status,
       hls_url: hlsUrl,
       duration_seconds: video.duration_secs,

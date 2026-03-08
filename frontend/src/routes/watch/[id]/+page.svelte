@@ -55,7 +55,7 @@
 
   <div class="meta-container glass-panel">
     <div class="info-header">
-      <h2>Video {videoId}</h2>
+      <h2>{status?.title || 'Untitled Video'}</h2>
       {#if status?.status === 'ready'}
         <span class="badge success">Ready</span>
       {:else if status?.status === 'processing'}
