@@ -15,5 +15,13 @@ export async function presignedPutUrl(key, contentType) {
     Key: key,
     ContentType: contentType,
   });
-  return getSignedUrl(s3, command, { expiresIn: config.presignedUrlExpirySeconds });
+  let url = await getSignedUrl(s3, command, { expiresIn: config.presignedUrlExpirySeconds });
+  
+  if (config.s3PublicEndpoint) {
+    const internalUrl = new URL(config.s3Endpoint);
+    const publicUrl = new URL(config.s3PublicEndpoint);
+    url = url.replace(internalUrl.host, publicUrl.host);
+  }
+  
+  return url;
 }

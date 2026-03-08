@@ -6,6 +6,7 @@ export const config = {
   s3Region: process.env.S3_REGION ?? 'us-east-1',
   s3AccessKey: required('S3_ACCESS_KEY'),
   s3SecretKey: required('S3_SECRET_KEY'),
+  s3PublicEndpoint: process.env.S3_PUBLIC_ENDPOINT ?? '',
   cdnBaseUrl: required('CDN_BASE_URL'),
   presignedUrlExpirySeconds: 3600,
   maxUploadSize: 1 * 1024 * 1024 * 1024, // 1 GiB
