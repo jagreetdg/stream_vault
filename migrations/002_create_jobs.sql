@@ -1,0 +1,3 @@
+-- migrations/002_create_jobs.sql
+-- (Optional/Placeholder for future job tracking if needed, Redis is used as the primary queue)
+-- Leaving empty or with this comment as per ARCHITECTURE_PLAN.md referencing it.
